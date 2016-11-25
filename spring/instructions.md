@@ -1,3 +1,9 @@
+## Misc
+
+* Add the git lol command: git config --global --add alias.lol "log --graph --decorate --pretty=oneline --abbrev-commit --all"
+* Tutorial: https://try.github.io
+
+
 ## Project instructions
 
 This project will assume that the group of students involved is composed of two or three students named A, B and C. If there are only two students in your group, the tasks of the student C will be realized by the student A or B depending on the student reviewing the work of the student C (if the student A is supposed to review the work of the student C, then the student B will do the work of the student C).
