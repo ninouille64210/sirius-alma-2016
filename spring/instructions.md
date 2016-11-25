@@ -66,6 +66,8 @@ The **student C** will then commit it in a branch named GITIGNORE and push this 
 
 At this point, each of the student should have at least one commit on his/her Git repository and NOTHING should have changed on the Git repository of the organization. Now each student will create a pull request in order to contribute his/her state of his/her Git repository into the Git repository of the organization.
 
+**CREATE ALL THE PULL REQUESTS IN THE GIT REPOSITORY OF THE ORGANIZATION FOR THE MASTER BRANCH OF THE ORGANIZATION**
+
 As a result, the Git repository of the organization should have 3 pull requests awaiting to be integrated. Any student of your team not involved in the creation of a commit can review a pull request during this step (B or C for the pull request of A, etc).
 
 Now you will merge the pull request of the **student C** first, then the **student B** and finally the **student A** using REBASE in order to have a linear history if the commit is valid. The history of the main repository should **ALWAYS** stay linear.
