@@ -34,7 +34,7 @@ public class Application {
 }
 ```
 
-The **student A** will now commit in a branch named CODE this change with a [MEANINGFUL commit message](http://lmgtfy.com/?q=good+git+commit+message) on his/her own copy of the Git repository in his/her Github account.
+The **student A** will now commit in a branch named CODE this change with a [MEANINGFUL commit message](http://lmgtfy.com/?q=good+git+commit+message) and push it on his/her own copy of the Git repository in his/her Github account.
 
 #### Student B
 
