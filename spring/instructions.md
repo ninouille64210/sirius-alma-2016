@@ -687,7 +687,7 @@ The **student B** will also uncomment the line in the HTML file in order to load
 </html>
 ```
 
-The **student B** will now push his/her commit on his/her Git repository and submit a pull request to the main Git repository. As a result, the continuous integration server on Travis-CI will now:
+The **student B** will now push his/her commit on his/her Git repository in a branch named FRONT_END_BUILD and submit a pull request to the main Git repository. As a result, the continuous integration server on Travis-CI will now:
 
 * install gulp (node.js and npm are installed by default in Travis)
 * build the JavaScript file main.js (with gulp minify which will use browserify to navigate all the dependencies of the JavaScript file recursively)
