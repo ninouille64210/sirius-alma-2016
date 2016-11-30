@@ -666,6 +666,27 @@ after_success:
   - docker push ORGANIZATION_NAME/alma-server:latest
 ```
 
+The **student B** will also uncomment the line in the HTML file in order to load the file main.js: 
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Static Resource</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+	<div class="jumbotron">
+		<h1>Home</h1>
+		<p>Some static content</p>
+	</div>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="main.min.js"></script>
+</body>
+</html>
+```
+
 The **student B** will now push his/her commit on his/her Git repository and submit a pull request to the main Git repository. As a result, the continuous integration server on Travis-CI will now:
 
 * install gulp (node.js and npm are installed by default in Travis)
