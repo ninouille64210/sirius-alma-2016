@@ -411,22 +411,6 @@ Create a commit in a new branch named "TEST" and push it to your Git repository,
 
 Accept the pull request if the Travis build is successful.
 
-### Add front end resources
-
-#### Student C
-
-#### Student B
-
-Accept the pull request if it works.
-
-### Configure the build of your front end resources
-
-#### Student A
-
-#### Student C
-
-Accept the pull request if it works.
-
 ### Publish a Github release for each tagged commit
 
 #### Student B
@@ -436,6 +420,264 @@ In a branch named "GITHUB_RELEASE", make sure that your Travis build publishes o
 ##### Student A
 
 Accept the pull request if you are confident with the change and of course if the build is successful. A release should be available in the release page of your project with the Jar created by the build.
+
+### Add front end resources
+
+#### Student C
+
+The **student C** will create a file named index.html in the folder "alma-server/src/main/resources/static/" with the following content:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Static Resource</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+	<div class="jumbotron">
+		<h1>Home</h1>
+		<p>Some static content</p>
+	</div>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- <script src="main.min.js"></script> -->
+</body>
+</html>
+```
+
+The JavaScript file "main.min.js" does not exist for the moment and it will be created by our continuous integration build. The **student C** will commit his/her work in a branch named STATIC and push it to his/her Git repository, after that he/she will submit a pull request to the main Git repository. If you launch the server, the URL http://localhost:8080/ will display the welcome message and the URL http://localhost:8080/index.html will show this static resource. Note that a proper web server would redirect the request to "/" to "/index.html" using a simple [resource](https://github.com/svalyn/svalyn/blob/master/svalyn-server/src/main/java/com/svalyn/server/controllers/IndexController.java).
+
+#### Student B
+
+The **student B** will accept the pull request if it works.
+
+
+### Configure the build of your front end resources
+
+#### Student A
+
+The **student A** will create a file named "main.js" in the folder "static" next to the index.html file. The file main.js will have the following content:
+
+```javascript
+/*******************************************************************************
+ * Copyright (c) 2016 <INSERT YOUR ORGANISATION NAME HERE>.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the MIT License which
+ * accompanies this distribution, and is available at
+ * https://opensource.org/licenses/MIT
+ *******************************************************************************/
+(function () {
+    'use strict';
+
+    var greatFunction = require('./folder/greatFunction');
+    greatFunction();
+})();
+```
+
+The **student A** will now create a second Javascript file used from the first one, as such we will create a graph of dependencies between our JavaScript files. Create a file named "greatFunction.js" in the folder "alma-server/src/main/resources/static/folder" with the following content:
+
+```javascript
+/*******************************************************************************
+ * Copyright (c) 2016 <INSERT YOUR ORGANISATION NAME HERE>.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the MIT License which
+ * accompanies this distribution, and is available at
+ * https://opensource.org/licenses/MIT
+ *******************************************************************************/
+(function () {
+    'use strict';
+
+    var greatFunction = function () {
+        alert('This is great!');
+    };
+    
+    module.exports = greatFunction;
+})();
+```
+
+This style of import using "require" and "module.exports" is also known as [CommonJS](https://nodejs.org/docs/latest/api/modules.html) and this is the standard way of managing imports between files in Node.js.
+
+CommonJS works well but it has one issues, web browsers do not understand it. While the specification of ECMAScript 6 has defined a new syntax to import and export content between files, it has not defined yet how to load those modules. As a result, we will need to compile those modules into a single JavaScript file first in order to use it in our web page. The result of this build will produce our file named main.min.js because it will also be minified in order to remove comments. For that, the **student A** will now create a file named "package.json" in the folder "resources" with the following content:
+
+```json
+{
+  "name": "alma-master",
+  "version": "0.1.0",
+  "description": "Simple web application",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ORGANISATION_NAME/alma-m2-2016.git"
+  },
+  "keywords": [
+    "alma"
+  ],
+  "author": "Stéphane Bégaudeau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ORGANISATION_NAME/alma-m2-2016/issues"
+  },
+  "homepage": "https://github.com/ORGANISATION_NAME/alma-m2-2016#readme",
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-size": "^2.1.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.3",
+    "jshint-checkstyle-file-reporter": "0.0.1",
+    "jshint-stylish": "^2.2.1"
+  }
+}
+```
+
+You can see in this file that we have the definition of all the developement tools that will be used to build the front end content of this project. Now you will create a file specifying how your project will be built. While we are using Maven for the Java build, here we will use Gulp as specified in the package.json file above. Create a file named "gulpfile.js" next to the file "package.json" in the folder "resources" with the following content:
+
+```javascript
+/*******************************************************************************
+ * Copyright (c) 2016 <INSERT YOUR ORGANISATION NAME HERE>.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the MIT License which
+ * accompanies this distribution, and is available at
+ * https://opensource.org/licenses/MIT
+ *******************************************************************************/
+
+'use strict';
+
+let gulp = require('gulp'),
+    browserify = require('gulp-browserify'),
+    gulpUtil = require('gulp-util');
+
+var $ = require('gulp-load-plugins')();
+
+gulp.task('clean', () => {
+    return gulp.src([
+        'static/main.min.js',
+        'static/main.browserify.js',
+        'checkstyle.xml'
+    ]).pipe($.clean());
+});
+
+gulp.task('scripts', ['clean'], () => {
+    return gulp.src(
+        [
+            'static/**/*.js'
+        ])
+        .pipe($.jshint())
+        .pipe($.jshint.reporter(require('jshint-stylish')))
+        .pipe($.jshint.reporter(require('jshint-checkstyle-file-reporter')))
+        .pipe($.size());
+});
+
+gulp.task('browserify', ['scripts'], () => {
+    return gulp.src(['static/main.js'])
+        .pipe(browserify({insertGlobals: true}))
+        .pipe($.concat('main.browserify.js'))
+        .pipe(gulp.dest('static/'));
+});
+
+gulp.task('minify', ['browserify'], () => {
+    return gulp.src(['static/main.browserify.js'])
+        .pipe($.uglify().on('error', gulpUtil.log))
+        .pipe($.rename('main.min.js'))
+        .pipe(gulp.dest('static'))
+});
+```
+
+With this gulp task, you can now clean the build artifact, create the browserify-ed version of the JavaScript file and minify it with uglify in order to create the file main.min.js. Now you need to define the static analysis rules of your project. For that create in the same folder a file named ".jshintrc" with the following content:
+
+```json
+{
+  "esversion": 6,
+  "node": true,
+  "browser": true,
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "quotmark": "single",
+  "regexp": true,
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "trailing": true,
+  "smarttabs": true
+}
+```
+
+Finally the **student A** will create a commit on a branch named STATIC_RESOURCES_BUILD and push it on his/her Git repository then he/she will submit a pull request on the main Git repository.
+
+#### Student C
+
+The **student C** will perform the code review of this pull request and integrate it if it works.
+
+
+### Launch the build of your front end resources
+
+#### Student B
+
+The **student C** has created the static resources of the front end, the **student A** has created a build for them, now it is time to launch this build using our continuous integration server. For that, the **student B** will modify the build in the file ".travis.yml" to set the following content:
+
+```yml
+sudo: required
+services:
+  - docker
+
+language: java
+jdk: oraclejdk8
+
+branches:
+  only:
+    - master
+
+before_install:
+  - docker version
+  - docker info
+  - node --version
+  - npm --version
+
+script:
+  - cd alma-server/src/main/resources
+  - pwd
+  - npm install -g gulp
+  - npm install
+  - gulp minify
+  - cd ../../../../
+  - mvn clean verify -f alma-server/pom.xml -e
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker images
+  - docker push ORGANIZATION_NAME/alma-server:latest
+```
+
+The **student B** will now push his/her commit on his/her Git repository and submit a pull request to the main Git repository. As a result, the continuous integration server on Travis-CI will now:
+
+* install gulp (node.js and npm are installed by default in Travis)
+* build the JavaScript file main.js (with gulp minify which will use browserify to navigate all the dependencies of the JavaScript file recursively)
+* build the Java file in order to create a jar (which will contain the static resources built)
+
+You should now have a project creating a simple web server with Java resources creating responses along with static resources in HTML and JavaScript. This server is built with various tools using a continuous integration server and its build publishes a Docker container for each change on the Docker Registry.
+
+#### Student A
+
+If the build is successful and if the review is good, the **student A** will integrate it.
+
 
 ### Deployment on any kind of cloud platform (bonus points)
 
