@@ -206,9 +206,9 @@ The **student C** will create a commit with this file in a branch named "DOCKER"
 
 The **student B** will then indicate with a comment that the **student C** has an error in his/het Docker file because the version of the project has been changed from 0.1.0 to 1.0.0.
 
-#### Student B
+#### Student C
 
-The **student B** will have to change the reference to "alma-server-0.1.0-SNAPSHOT.jar" to "alma-server-1.0.0-SNAPSHOT.jar" in his/her Docker file. He/she will then have to create a new commit and a new pull request to the main repository.
+The **student C** will have to change the reference to "alma-server-0.1.0-SNAPSHOT.jar" to "alma-server-1.0.0-SNAPSHOT.jar" in his/her Docker file. He/she will then have to create a new commit and a new pull request to the main repository.
 
 #### Student B
 
