@@ -316,6 +316,28 @@ Then modify the "build" section of the pom.xml in order to have the following co
 
 **DO NOT FORGET TO REPLACE THE REFERENCES TO "ORGANIZATION_NAME"**
 
+Modify also the ".travis.yml" to add support for Docker during the build
+
+```yaml
+sudo: required
+services:
+  - docker
+
+language: java
+jdk: oraclejdk8
+
+branches:
+  only:
+    - master
+
+before_install:
+  - docker version
+  - docker info
+
+script:
+  - mvn clean verify -f alma-server/pom.xml -e
+```
+
 The **student A** should then create a commit in a new branch named "DOCKER_BUILD", push it to his/her Git repository and submit a pull requets to the main Git repository.
 
 #### Student C
