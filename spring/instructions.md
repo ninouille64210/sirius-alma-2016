@@ -338,6 +338,8 @@ script:
   - mvn clean verify -f alma-server/pom.xml -e
 ```
 
+Modify also the pom.xml in order to change the version number from 1.0.0 to 1.0.0-SNAPSHOT.
+
 The **student A** should then create a commit in a new branch named "DOCKER_BUILD", push it to his/her Git repository and submit a pull requets to the main Git repository.
 
 #### Student C
