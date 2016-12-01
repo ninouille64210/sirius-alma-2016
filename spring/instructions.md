@@ -255,7 +255,13 @@ Do not show the value of those variables in the log during the build.
 
 #### Student A
 
-The **student A** should now plug the creation of the Docker container during the build. For that the **student A** will have to modify the pom.xml in order to add a new property juste after "java.version". This property will contain the name of your Docker Hub organization account "<docker.image.prefix>ORGANIZATION_NAME</docker.image.prefix>". Then modify the "build" section of the pom.xml in order to have the following content instead:
+The **student A** should now plug the creation of the Docker container during the build. For that the **student A** will have to modify the pom.xml in order to add a new property juste after "java.version". This property will contain the name of your Docker Hub organization account:
+
+```xml
+<docker.image.prefix>ORGANIZATION_NAME</docker.image.prefix>
+```
+
+Then modify the "build" section of the pom.xml in order to have the following content instead:
 
 ```xml
     <build>
